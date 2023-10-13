@@ -1,0 +1,7 @@
+POST http://localhost:3200/api/yt/full
+content-type: application/json
+
+{
+  "url": "https://www.youtube.com/watch?v=SgM3r8xKfGE",
+  "resolution": 720
+}
