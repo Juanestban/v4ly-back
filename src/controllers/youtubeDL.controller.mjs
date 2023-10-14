@@ -84,7 +84,8 @@ export class YoutubeDL {
           console.log(`☣ started download video & audio`)
         })
         .on('progress', (progress) => {
-          console.log(`⬇️ downloading ${progress.percent.toFixed(2)}%`)
+          const percent = progress.percent.toFixed(2)
+          console.log(`⬇️ downloading ${percent}%`)
         })
         .on('end', () => {
           console.log('✅ downloaded successfully!')
