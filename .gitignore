@@ -1,5 +1,6 @@
 # files video&audio
 public/*.mp4
+*.rest
 
 # locks files
 yarn.lock
