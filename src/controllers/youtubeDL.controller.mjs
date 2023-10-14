@@ -1,5 +1,4 @@
 import fs from 'node:fs'
-import youtubedl from 'youtube-dl-exec'
 import ffmpeg from 'fluent-ffmpeg'
 
 import { PUBLIC_FOLDER } from '../constants/index.mjs'
@@ -13,6 +12,7 @@ export class YoutubeDL {
   #video = undefined
   #audio = undefined
   #output = undefined
+  #finalFilename = undefined
 
   constructor(title, formats = [], resolution) {
     this.#title = title
@@ -34,6 +34,10 @@ export class YoutubeDL {
 
   set output(newOutput) {
     this.#output = newOutput
+  }
+
+  get finalFilename() {
+    return this.#finalFilename
   }
 
   findVideo() {
@@ -61,11 +65,10 @@ export class YoutubeDL {
 
   download() {
     this.findVideoAudio()
+    this.#finalFilename = `${this.#filename ?? this.#title}__${this.#resolution}p.mp4`
+
     return new Promise((resolve, reject) => {
-      this.#output = getNewPath(
-        PUBLIC_FOLDER,
-        `${this.#filename ?? this.#title}__${this.#resolution}p.mp4`,
-      )
+      this.#output = getNewPath(PUBLIC_FOLDER, this.#finalFilename)
       const publicPath = getNewPath(PUBLIC_FOLDER)
 
       if (!fs.existsSync(publicPath)) {
@@ -93,38 +96,5 @@ export class YoutubeDL {
         .save(this.#output)
       command.run()
     })
-  }
-}
-
-export class youtubeController {
-  static async downloadVideoAudio(req, res) {
-    const { body } = req
-    const { url, filename, resolution } = body
-
-    try {
-      const { title, formats } = await youtubedl(url, {
-        dumpSingleJson: true,
-        noCheckCertificates: true,
-        noWarnings: true,
-        preferFreeFormats: true,
-        addHeader: ['referer:youtube.com', 'user-agent:googlebot'],
-      })
-      const _youtubedl = new YoutubeDL(title, formats, resolution)
-      _youtubedl.filename = filename
-      const output = await _youtubedl.download()
-
-      return res.status(200).json({ title, output }).end()
-    } catch (error) {
-      console.log(error)
-      throw new Error(error.message)
-    }
-  }
-
-  static async downloadOnlyVideo(req, res) {
-    return res.status(200).json({ status: 'working on that' }).end()
-  }
-
-  static async downloadOnlyAudio(req, res) {
-    return res.status(200).json({ status: 'working on that' }).end()
   }
 }

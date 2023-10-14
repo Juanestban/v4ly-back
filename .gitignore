@@ -1,3 +1,6 @@
+# files video&audio
+public/*.mp4
+
 # locks files
 yarn.lock
 package-lock.json
