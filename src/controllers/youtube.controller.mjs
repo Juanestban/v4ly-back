@@ -21,7 +21,7 @@ export class youtubeController {
       await _youtubedl.download()
 
       const link = `${env.baseUrl}/public/${_youtubedl.finalFilename}`
-      return res.status(200).json({ title, link }).end()
+      return res.status(200).json({ filename, link }).end()
     } catch (error) {
       console.log(error)
       throw new Error(error.message)
