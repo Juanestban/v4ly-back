@@ -17,7 +17,7 @@ export class YoutubeDL {
   constructor(title, formats = [], resolution) {
     this.#title = title
     this.#formats = formats
-    this.#resolution = parseInt(resolution) ?? 720
+    this.#resolution = parseInt(resolution) ?? 480
   }
 
   get filename() {

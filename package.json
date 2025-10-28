@@ -4,8 +4,8 @@
   "description": "backend from v4ly",
   "main": "./src/main.mjs",
   "scripts": {
-    "dev": "NODE_ENV=development node --watch ./src/main.mjs",
-    "start": "NODE_ENV=production node ./src/main.mjs",
+    "dev": "cross-env NODE_ENV=development node --watch ./src/main.mjs",
+    "start": "cross-env NODE_ENV=production node ./src/main.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -23,6 +23,7 @@
     "youtube-dl-exec": "2.4.15"
   },
   "devDependencies": {
+    "cross-env": "10.1.0",
     "eslint": "8.51.0",
     "eslint-config-prettier": "9.0.0",
     "eslint-config-standard": "17.1.0",
